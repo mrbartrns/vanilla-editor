@@ -67,6 +67,10 @@ body {
   background-color: rgba(55, 53, 47, 0.16);
 }
 
+.sidebar-body {
+  overflow-y: auto;
+}
+
 .sidebar-footer {
   display: flex;
   justify-content: center;
