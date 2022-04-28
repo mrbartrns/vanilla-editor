@@ -57,6 +57,7 @@ body {
   height: 45px;
   transition: background 20ms ease-in 0s;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .sidebar-header:hover {
@@ -80,6 +81,7 @@ body {
   border-top: 1px solid rgba(55, 53, 47, 0.16);
   transition: background 20ms ease-in 0s;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .sidebar-footer:hover {
