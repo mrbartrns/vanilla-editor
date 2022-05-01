@@ -6,9 +6,6 @@ import {
   SET_CURRENT_DOCUMENT,
   SET_TOGGLE_CONTROLLER,
 } from '../core/store.js';
-import storage from './storage.js';
-import { TOGGLE_INFO } from '../constants.js';
-
 import {
   CreateDocumentResponse,
   Document,
@@ -32,16 +29,11 @@ class DocumentTree {
     return null;
   }
 
-  createDocumentTree(
-    document: RootDocumentApi,
-    parent: number | null,
-    toggleSet: Set<number>
-  ) {
+  createDocumentTree(document: RootDocumentApi, parent: number | null) {
     const dfs = (document: RootDocumentApi, parent: number | null) => {
       const ret: Document = {
         ...document,
         documents: [],
-        toggled: toggleSet.has(document.id) ? true : false,
         parent,
       };
       for (const child of document.documents) {
@@ -75,12 +67,11 @@ class DocumentTree {
     );
 
     // add new document on document tree
-    const newDocument = {
+    const newDocument: Document = {
       id: response.id,
       parent: parentId,
       title: '',
       documents: [],
-      toggled: false,
     };
 
     // case if root or not
@@ -92,7 +83,13 @@ class DocumentTree {
     } else {
       const target = this.bfs(nextState, parentId);
       if (target) {
-        target.toggled = true;
+        const toggleInfo = getState().toggleController;
+        const toggleSet = new Set(toggleInfo);
+        toggleSet.add(target.id);
+        dispatch({
+          type: SET_TOGGLE_CONTROLLER,
+          payload: Array.from(toggleSet),
+        });
         target.documents.push(newDocument);
       }
 

@@ -12,7 +12,6 @@ export interface RootDocumentApi extends CreateDocumentResponse {
 export interface Document extends CreateDocumentResponse {
   parent: number | null;
   documents: Document[];
-  toggled: boolean;
 }
 
 export interface SelectedDocument extends BaseDocumentInfo {

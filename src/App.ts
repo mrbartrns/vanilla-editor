@@ -60,6 +60,7 @@ class App extends Component {
 
   async router() {
     const { pathname } = location;
+    // route 불러올 때 다시 fetchTree ->
     this.$sidebar.$body.render();
 
     // SET CURRENT SELECTED CLASS ON LIST BY PATHNAME
@@ -100,16 +101,10 @@ class App extends Component {
   async fetchInit() {
     const response = await fetchDocumentTree();
     const toggles = storage.getItem(TOGGLE_INFO, []);
-
-    // TODO: validation
     dispatch({ type: SET_TOGGLE_CONTROLLER, payload: toggles });
 
     const data = response.map((document) =>
-      tree.createDocumentTree(
-        document,
-        null,
-        new Set(getState().toggleController)
-      )
+      tree.createDocumentTree(document, null)
     );
 
     dispatch({ type: SET_DOCUMENT_TREE, payload: data });
