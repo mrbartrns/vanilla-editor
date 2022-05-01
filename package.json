@@ -4,7 +4,6 @@
   "description": "바닐라 JS만을 이용해 노션을 클로닝합니다.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsc",
     "start": "serve -s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +20,8 @@
   "homepage": "https://github.com/prgrms-fe-devcourse/FEDC2-4_Project_Notion_VanillaJS#readme",
   "dependencies": {
     "serve": "^13.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
   }
 }
