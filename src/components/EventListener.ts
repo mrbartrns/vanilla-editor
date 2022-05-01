@@ -6,22 +6,28 @@ import {
   EDIT_DOCUMENT_EVENT,
   CLICK_OUTSIDE_MODAL_EVENT,
   EDITOR_AUTOSAVE_EVENT,
+  TOGGLE_INFO,
 } from '../constants.js';
 import tree from '../utils/DocumentTree.js';
 import { fetchAdd, fetchDelete, fetchUpdate } from '../apis/request.js';
 import { onRouteChange } from '../utils/router.js';
+import storage from '../utils/storage.js';
+import { getState, dispatch, SET_TOGGLE_CONTROLLER } from '../core/store.js';
 
 class EventListener {
   constructor() {
     window.addEventListener(TOGGLE_EVENT, (e: any) => {
       const { id } = e.detail;
-      const toggleResult = tree._toggleTree(id);
-      if (toggleResult) {
-        tree._addToToggleSet(id);
+      const toggleInfo = getState().toggleController;
+      const toggleSet = new Set<number>([...toggleInfo]);
+      if (toggleSet.has(id)) {
+        toggleSet.delete(id);
       } else {
-        tree._deleteFromToggleSet(id);
+        toggleSet.add(id);
       }
-      tree._saveToggleInfo();
+      const nextToggleInfo = Array.from(toggleSet);
+      dispatch({ type: SET_TOGGLE_CONTROLLER, payload: nextToggleInfo });
+      storage.setItem(TOGGLE_INFO, nextToggleInfo);
     });
 
     window.addEventListener(ADD_TO_TREE_EVENT, async (e: any) => {
@@ -41,8 +47,13 @@ class EventListener {
 
       // request deleteAPI
       fetchDelete(id);
-      tree._deleteFromToggleSet(id);
-      tree._saveToggleInfo();
+
+      // delete id from toggleSet
+      const toggleInfo = getState().toggleController;
+      const toggleSet = new Set<number>([...toggleInfo]);
+      toggleSet.delete(id);
+      const nextToggleInfo = Array.from(toggleSet);
+      dispatch({ type: SET_TOGGLE_CONTROLLER, payload: nextToggleInfo });
 
       // if target id was what I saw, go to root page
       const { pathname } = location;

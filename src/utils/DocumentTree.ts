@@ -66,24 +66,13 @@ class DocumentTree {
     return ret;
   }
 
-  _toggleTree(id: string | number) {
-    const nextDocumentTree = JSON.parse(
-      JSON.stringify(getState().documentTree)
-    ); // deep copy
-
-    const target = this.bfs(nextDocumentTree, id);
-    if (target) target.toggled = !target.toggled;
-
-    dispatch({ type: SET_DOCUMENT_TREE, payload: nextDocumentTree });
-
-    return target ? target.toggled : false;
-  }
-
   /**
    * Document Tree에 Document를 추가하는 메소드
    */
   _addToTree(parentId: number | null, response: CreateDocumentResponse) {
-    const nextState = JSON.parse(JSON.stringify(getState().documentTree));
+    const nextState: Document[] = JSON.parse(
+      JSON.stringify(getState().documentTree)
+    );
 
     // add new document on document tree
     const newDocument = {
@@ -152,27 +141,6 @@ class DocumentTree {
     if (target) target.title = title;
 
     dispatch({ type: SET_DOCUMENT_TREE, payload: nextDocumentTree });
-  }
-
-  _addToToggleSet(id: number) {
-    const ret = [...getState().toggleController, id];
-
-    dispatch({
-      type: SET_TOGGLE_CONTROLLER,
-      payload: ret,
-    });
-  }
-
-  _deleteFromToggleSet(id: number) {
-    const set = new Set(Array.from(getState().toggleController));
-    set.delete(id);
-
-    dispatch({ type: SET_TOGGLE_CONTROLLER, payload: Array.from(set) });
-  }
-
-  _saveToggleInfo() {
-    const nextToggleInfo = getState().toggleController;
-    storage.setItem(TOGGLE_INFO, nextToggleInfo);
   }
 }
 export default new DocumentTree();

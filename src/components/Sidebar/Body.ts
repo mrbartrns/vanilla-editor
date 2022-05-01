@@ -22,13 +22,64 @@ class Body extends Component {
 
   template() {
     const documentTree = getState().documentTree;
+    const toggleSet = new Set([...getState().toggleController]);
+
+    // render subtree
+    const subTemplate = (document: Document, depth: number): string => {
+      return `
+        <div data-id="${document.id}">
+          <div data-id="${
+            document.id
+          }" data-depth="${depth}" class="document-list ${DOCUMENT_LIST_CLASSNAME}"
+            style="padding: 2px 14px 2px ${14 * (depth + 1)}px;"
+          >
+            <div role="button" class="sidebar-btn ${TOGGLE_CLASSNAME} ${
+        toggleSet.has(document.id) ? 'toggled' : ''
+      }"></div>
+            <div class="document-list-title-wrapper ${
+              Number(location.pathname.split('/')[2]) === document.id
+                ? 'current-document'
+                : ''
+            }">
+              <div class="document-list-title">
+                ${document.title ? document.title : '제목없음'}
+              </div>
+          </div>
+          <div class="sidebar-btn-wrapper">
+            <div role="button" class="sidebar-btn ${ADD_CLASSNAME}"></div>
+            <div role="button" class="sidebar-btn ${DELETE_CLASSNAME}"></div>
+          </div>
+          </div>
+        ${
+          document.documents.length && toggleSet.has(document.id)
+            ? document.documents
+                .map((child) => {
+                  return subTemplate(child, depth + 1);
+                })
+                .join('')
+            : toggleSet.has(document.id)
+            ? `<div class="document-list" style="padding: 2px 14px 2px ${
+                14 * (depth + 2)
+              }px;">
+                <div class="document-list-title-wrapper">
+                  <div class="document-list-title">
+                    하위 문서가 없습니다.
+                  </div>
+                </div>
+              </div>`
+            : ''
+        }
+        </div>
+      `;
+    };
+
     return `
     <div class="sidebar-documents">
       ${
         documentTree.length
           ? documentTree
               .map((document) => {
-                return this.renderTree(document, 0);
+                return subTemplate(document, 0);
               })
               .join('')
           : `<div class="document-list">아직 문서가 없습니다.:)</div>`
@@ -41,54 +92,6 @@ class Body extends Component {
         </div>
       </div>
     </div>
-    `;
-  }
-
-  renderTree(document: Document, depth: number): string {
-    return `
-      <div data-id="${document.id}">
-        <div data-id="${
-          document.id
-        }" data-depth="${depth}" class="document-list ${DOCUMENT_LIST_CLASSNAME}"
-          style="padding: 2px 14px 2px ${14 * (depth + 1)}px;"
-        >
-          <div role="button" class="sidebar-btn ${TOGGLE_CLASSNAME} ${
-      document.toggled ? 'toggled' : ''
-    }"></div>
-          <div class="document-list-title-wrapper ${
-            Number(location.pathname.split('/')[2]) === document.id
-              ? 'current-document'
-              : ''
-          }">
-            <div class="document-list-title">
-              ${document.title ? document.title : '제목없음'}
-            </div>
-        </div>
-        <div class="sidebar-btn-wrapper">
-          <div role="button" class="sidebar-btn ${ADD_CLASSNAME}"></div>
-          <div role="button" class="sidebar-btn ${DELETE_CLASSNAME}"></div>
-        </div>
-        </div>
-      ${
-        document.documents.length && document.toggled
-          ? document.documents
-              .map((child) => {
-                return this.renderTree(child, depth + 1);
-              })
-              .join('')
-          : document.toggled
-          ? `<div class="document-list" style="padding: 2px 14px 2px ${
-              14 * (depth + 2)
-            }px;">
-              <div class="document-list-title-wrapper">
-                <div class="document-list-title">
-                  하위 문서가 없습니다.
-                </div>
-              </div>
-            </div>`
-          : ''
-      }
-      </div>
     `;
   }
 }
