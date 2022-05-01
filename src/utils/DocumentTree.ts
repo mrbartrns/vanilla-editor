@@ -30,19 +30,15 @@ class DocumentTree {
   }
 
   createDocumentTree(document: RootDocumentApi, parent: number | null) {
-    const dfs = (document: RootDocumentApi, parent: number | null) => {
-      const ret: Document = {
-        ...document,
-        documents: [],
-        parent,
-      };
-      for (const child of document.documents) {
-        ret.documents.push(dfs(child, document.id));
-      }
-      return ret;
+    const ret: Document = {
+      ...document,
+      documents: [],
+      parent,
     };
-    const treeWithToggleOptions = dfs(document, parent);
-    return treeWithToggleOptions;
+    for (const child of document.documents) {
+      ret.documents.push(this.createDocumentTree(child, document.id));
+    }
+    return ret;
   }
 
   deleteSubTree(document: Document, deletedId: string | number) {
@@ -60,8 +56,9 @@ class DocumentTree {
 
   /**
    * Document Tree에 Document를 추가하는 메소드
+   * TODO: 얘도 분리하기
    */
-  _addToTree(parentId: number | null, response: CreateDocumentResponse) {
+  addToTree(parentId: number | null, response: CreateDocumentResponse) {
     const nextState: Document[] = JSON.parse(
       JSON.stringify(getState().documentTree)
     );
@@ -121,6 +118,7 @@ class DocumentTree {
       nextDocumentTree.push(child);
     }
 
+    // TODO: nextDocumentTree 반환 및 dispatch 분리
     dispatch({ type: SET_DOCUMENT_TREE, payload: nextDocumentTree });
   }
 

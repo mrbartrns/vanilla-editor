@@ -33,7 +33,7 @@ class EventListener {
     window.addEventListener(ADD_TO_TREE_EVENT, async (e: any) => {
       const { id } = e.detail;
       const response = await fetchAdd(id);
-      const nextDocument = tree._addToTree(id, response);
+      const nextDocument = tree.addToTree(id, response);
 
       // change route
       onRouteChange(
