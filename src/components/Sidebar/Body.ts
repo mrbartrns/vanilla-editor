@@ -23,6 +23,7 @@ class Body extends Component {
   template() {
     const documentTree = getState().documentTree;
     const toggleSet = new Set([...getState().toggleController]);
+    const currentDocument = getState().currentDocument;
 
     // render subtree
     const subTemplate = (document: Document, depth: number): string => {
@@ -37,9 +38,7 @@ class Body extends Component {
         toggleSet.has(document.id) ? 'toggled' : ''
       }"></div>
             <div class="document-list-title-wrapper ${
-              Number(location.pathname.split('/')[2]) === document.id
-                ? 'current-document'
-                : ''
+              currentDocument?.id === document.id ? 'current-document' : ''
             }">
               <div class="document-list-title">
                 ${document.title ? document.title : '제목없음'}
