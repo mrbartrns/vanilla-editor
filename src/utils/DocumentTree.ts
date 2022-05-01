@@ -32,7 +32,7 @@ class DocumentTree {
     return null;
   }
 
-  setToggleOption(
+  createDocumentTree(
     document: RootDocumentApi,
     parent: number | null,
     toggleSet: Set<number>

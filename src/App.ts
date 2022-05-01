@@ -105,7 +105,11 @@ class App extends Component {
     dispatch({ type: SET_TOGGLE_CONTROLLER, payload: toggles });
 
     const data = response.map((document) =>
-      tree.setToggleOption(document, null, new Set(getState().toggleController))
+      tree.createDocumentTree(
+        document,
+        null,
+        new Set(getState().toggleController)
+      )
     );
 
     dispatch({ type: SET_DOCUMENT_TREE, payload: data });
