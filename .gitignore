@@ -1,6 +1,6 @@
 node_modules/
 dist/
-public/
+# public/
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
