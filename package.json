@@ -2,7 +2,7 @@
   "name": "fedc2-4_project_notion_vanillajs",
   "version": "1.0.0",
   "description": "바닐라 JS만을 이용해 노션을 클로닝합니다.",
-  "main": "public/index.js",
+  "main": "index.html",
   "scripts": {
     "build": "tsc",
     "start": "serve -s",
