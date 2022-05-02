@@ -128,7 +128,7 @@ class DocumentTree {
     const { id, title } = editorState;
 
     // sidebar update with title
-    const nextDocumentTree = JSON.parse(
+    const nextDocumentTree: Document[] = JSON.parse(
       JSON.stringify(getState().documentTree)
     ); // deep copy
 
