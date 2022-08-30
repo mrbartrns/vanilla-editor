@@ -1,12 +1,12 @@
-export interface QueueNode<T> {
+export interface QNode<T> {
   data: T;
-  next: QueueNode<T> | null;
+  next: QNode<T> | null;
 }
 
-class Node<T> implements QueueNode<T> {
+class QueueNode<T> implements QNode<T> {
   data: T;
 
-  next: QueueNode<T> | null;
+  next: QNode<T> | null;
 
   constructor(value: T) {
     this.data = value;
@@ -14,4 +14,4 @@ class Node<T> implements QueueNode<T> {
   }
 }
 
-export default Node;
+export default QueueNode;

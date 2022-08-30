@@ -1,4 +1,4 @@
-import Node, { QueueNode } from '../core/Node';
+import QueueNode, { QNode } from '../core/Node';
 
 interface QueueInterface<T> {
   head: T | null;
@@ -6,10 +6,10 @@ interface QueueInterface<T> {
   size: number;
 }
 
-class Queue<T> implements QueueInterface<QueueNode<T>> {
-  head: QueueNode<T> | null;
+class Queue<T> implements QueueInterface<QNode<T>> {
+  head: QNode<T> | null;
 
-  tail: QueueNode<T> | null;
+  tail: QNode<T> | null;
 
   size: number;
 
@@ -20,7 +20,7 @@ class Queue<T> implements QueueInterface<QueueNode<T>> {
   }
 
   enqueue(value: T) {
-    const newNode = new Node(value);
+    const newNode = new QueueNode(value);
     if (!this.head || !this.tail) {
       this.head = newNode;
       this.tail = newNode;
