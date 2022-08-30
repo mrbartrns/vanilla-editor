@@ -8,7 +8,7 @@
 - editor가 가질 수 있는 가장 기본적인 기능에 집중하여, 사용자는 오직 내용을 작성에만 집중할 수 있습니다.
 - 작성과 동시에 실시간으로 저장됩니다. 더 이상 열심히 작성한 작업물들을 저장 버튼을 누르지 않아 날라갈 걱정은 접어두세요!
 
-[!시연](https://user-images.githubusercontent.com/56826914/164239462-c8fa795d-36f0-4d54-9af0-8b8f6c8f29f5.gif)
+![시연](https://user-images.githubusercontent.com/56826914/164239462-c8fa795d-36f0-4d54-9af0-8b8f6c8f29f5.gif)
 
 ## 기술 스택
 
