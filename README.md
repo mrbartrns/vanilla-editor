@@ -65,6 +65,16 @@ export { Component };
 ```
 2. 상위 컴포넌트에서 하위 컴포넌트로 단방향으로 데이터가 흐르도록 설계하였습니다.  
 
+상위 컴포넌트에서 하위 컴포넌트로 데이터가 흐르도록 하여 상태를 좀 더 쉽게 추적하고자 하였습니다.
+
 ![structure](https://velog.velcdn.com/images/mrbartrns/post/a65aa03a-8795-4b31-8d21-b2cc6953722f/image.svg) 
 
-3. adsfadsf
+3. 이 과정에서 prop-drilling 현상과, 대부분 컴포넌트가 접근하는 데이터에 대한 관리를 어떻게 관리해야 할 지 고민하였고, 옵저버 패턴의 전역 상태 관리 모델을 도입하여 해결을 시도하였습니다.  
+
+
+
+
+### 추후 계획
+
+- webpack, babel, eslint, prettier 패키지로 좀 더 체계적인 프로젝트 관리
+- webpack 환경에서 코드 스플리팅
