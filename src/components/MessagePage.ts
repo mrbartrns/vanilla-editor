@@ -1,4 +1,4 @@
-import { Component } from './Component.js';
+import Component from './Component.js';
 import { IBaseProps } from './types/index.js';
 
 interface IProps extends IBaseProps {
@@ -7,6 +7,7 @@ interface IProps extends IBaseProps {
 
 class MessagePage extends Component {
   text: string;
+
   constructor({ $target, text }: IProps) {
     super({ $target, elementType: 'div' });
     this.$element.className = 'message-page';
@@ -23,4 +24,4 @@ class MessagePage extends Component {
   }
 }
 
-export { MessagePage };
+export default MessagePage;

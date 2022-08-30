@@ -1,4 +1,4 @@
-import { Component } from '../Component.js';
+import Component from '../Component.js';
 import { IBaseProps } from '../types/index.js';
 
 class Footer extends Component {
@@ -14,4 +14,4 @@ class Footer extends Component {
     `;
   }
 }
-export { Footer };
+export default Footer;

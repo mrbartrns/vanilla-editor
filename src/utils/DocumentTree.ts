@@ -1,4 +1,4 @@
-import { Queue } from './Queue.js';
+import Queue from './Queue.js';
 import {
   getState,
   dispatch,
@@ -15,6 +15,8 @@ import {
   DocumentContentApi,
   RootDocumentApi,
 } from '../apis/types/apis.js';
+
+type NewType = number;
 
 class DocumentTree {
   /**
@@ -35,15 +37,17 @@ class DocumentTree {
   setToggleOption(
     document: RootDocumentApi,
     parent: number | null,
-    toggleSet: Set<number>
+    toggleSet: Set<number>,
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const dfs = (document: RootDocumentApi, parent: number | null) => {
       const ret: Document = {
         ...document,
         documents: [],
-        toggled: toggleSet.has(document.id) ? true : false,
+        toggled: !!toggleSet.has(document.id),
         parent,
       };
+      // eslint-disable-next-line no-restricted-syntax
       for (const child of document.documents) {
         ret.documents.push(dfs(child, document.id));
       }
@@ -59,6 +63,7 @@ class DocumentTree {
       ...document,
       documents: [],
     };
+    // eslint-disable-next-line no-restricted-syntax
     for (const child of document.documents) {
       const result = this.deleteSubTree(child, deletedId);
       if (result) ret.documents.push(result);
@@ -68,7 +73,7 @@ class DocumentTree {
 
   _toggleTree(id: string | number) {
     const nextDocumentTree = JSON.parse(
-      JSON.stringify(getState().documentTree)
+      JSON.stringify(getState().documentTree),
     ); // deep copy
 
     const target = this.bfs(nextDocumentTree, id);
@@ -114,7 +119,7 @@ class DocumentTree {
 
   _deleteFromTree(id: number) {
     const currentDocumentTree: Document[] = JSON.parse(
-      JSON.stringify(getState().documentTree)
+      JSON.stringify(getState().documentTree),
     );
 
     // find that I want to delete
@@ -130,6 +135,7 @@ class DocumentTree {
      * add remove target's documents into root
      * set child documents' parent as null
      */
+    // eslint-disable-next-line no-restricted-syntax
     for (const child of target.documents) {
       child.parent = null;
       nextDocumentTree.push(child);
@@ -145,7 +151,7 @@ class DocumentTree {
 
     // sidebar update with title
     const nextDocumentTree = JSON.parse(
-      JSON.stringify(getState().documentTree)
+      JSON.stringify(getState().documentTree),
     ); // deep copy
 
     const target = this.bfs(nextDocumentTree, id);
@@ -154,7 +160,7 @@ class DocumentTree {
     dispatch({ type: SET_DOCUMENT_TREE, payload: nextDocumentTree });
   }
 
-  _addToToggleSet(id: number) {
+  _addToToggleSet(id: NewType) {
     const ret = [...getState().toggleController, id];
 
     dispatch({

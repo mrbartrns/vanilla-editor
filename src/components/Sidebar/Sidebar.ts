@@ -1,7 +1,7 @@
-import { Component } from '../Component.js';
-import { Header } from './Header.js';
-import { Body } from './Body.js';
-import { Footer } from './Footer.js';
+import Component from '../Component.js';
+import Header from './Header.js';
+import Body from './Body.js';
+import Footer from './Footer.js';
 import {
   DOCUMENT_LIST_CLASSNAME,
   ADD_CLASSNAME,
@@ -17,9 +17,13 @@ import { IBaseProps } from '../types/index.js';
 
 class Sidebar extends Component {
   $sidebar: HTMLElement;
+
   $header: Component;
+
   $body: Component;
+
   $footer: Component;
+
   constructor({ $target }: IBaseProps) {
     super({ $target, elementType: 'div' });
     this.$element.className = 'sidebar-wrapper';
@@ -46,27 +50,26 @@ class Sidebar extends Component {
       if ($document.classList.contains(ROOT_ADD_CLASSNAME)) {
         // onAdd(null);
         dispatchEvent(
-          new CustomEvent(ADD_TO_TREE_EVENT, { detail: { id: null } })
+          new CustomEvent(ADD_TO_TREE_EVENT, { detail: { id: null } }),
         );
         return;
       }
       const id = Number($document.dataset.id);
       if (e.target.classList.contains(ADD_CLASSNAME)) {
-        dispatchEvent(
-          new CustomEvent(ADD_TO_TREE_EVENT, { detail: { id: id } })
-        );
+        dispatchEvent(new CustomEvent(ADD_TO_TREE_EVENT, { detail: { id } }));
       } else if (e.target.classList.contains(TOGGLE_CLASSNAME)) {
-        dispatchEvent(new CustomEvent(TOGGLE_EVENT, { detail: { id: id } }));
+        dispatchEvent(new CustomEvent(TOGGLE_EVENT, { detail: { id } }));
       } else if (e.target.classList.contains(DELETE_CLASSNAME)) {
         dispatchEvent(
-          new CustomEvent(DELETE_FROM_TREE_EVENT, { detail: { id: id } })
+          new CustomEvent(DELETE_FROM_TREE_EVENT, { detail: { id } }),
         );
       } else if (id > -1) {
         dispatchEvent(
-          new CustomEvent(CLICK_DOCUMENT_EVENT, { detail: { id: id } })
+          new CustomEvent(CLICK_DOCUMENT_EVENT, { detail: { id } }),
         );
       }
     });
   }
 }
-export { Sidebar };
+
+export default Sidebar;

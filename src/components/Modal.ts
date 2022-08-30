@@ -1,6 +1,6 @@
 import { CLICK_OUTSIDE_MODAL_EVENT } from '../constants.js';
-import { Component } from './Component.js';
-import { Editor } from './Editor.js';
+import Component from './Component.js';
+import Editor from './Editor.js';
 import { IBaseProps } from './types/index.js';
 
 class Modal extends Component {
@@ -27,4 +27,4 @@ class Modal extends Component {
     });
   }
 }
-export { Modal };
+export default Modal;

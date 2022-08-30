@@ -1,7 +1,4 @@
-interface QueueNode<T> {
-  data: T;
-  next: QueueNode<T> | null;
-}
+import Node, { QueueNode } from '../core/Node';
 
 interface QueueInterface<T> {
   head: T | null;
@@ -9,18 +6,11 @@ interface QueueInterface<T> {
   size: number;
 }
 
-class Node<T> implements QueueNode<T> {
-  data: T;
-  next: QueueNode<T> | null;
-  constructor(value: T) {
-    this.data = value;
-    this.next = null;
-  }
-}
-
 class Queue<T> implements QueueInterface<QueueNode<T>> {
   head: QueueNode<T> | null;
+
   tail: QueueNode<T> | null;
+
   size: number;
 
   constructor() {
@@ -50,7 +40,7 @@ class Queue<T> implements QueueInterface<QueueNode<T>> {
     if (!this.head) {
       this.tail = null;
     }
-    this.size--;
+    this.size -= 1;
     return removed.data;
   }
 
@@ -68,4 +58,4 @@ class Queue<T> implements QueueInterface<QueueNode<T>> {
   }
 }
 
-export { Queue };
+export default Queue;

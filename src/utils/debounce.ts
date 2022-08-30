@@ -1,8 +1,8 @@
-export function debounce<P extends any[]>(
-  fn: (...args: P) => any,
-  delay: number = 0
+export default function debounce<P extends any[]>(
+  fn: (...args: P) => unknown,
+  delay = 0,
 ): (...args: P) => void {
-  let timer: null | number = null;
+  let timer: null | ReturnType<typeof setTimeout> = null;
   return (...args: P) => {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {

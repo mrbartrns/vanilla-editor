@@ -1,4 +1,4 @@
-import { createStore } from './createStore.js';
+import createStore from './createStore.js';
 import { Action } from './types/actions.js';
 import { Document, DocumentContentApi } from '../apis/types/apis.js';
 
@@ -24,10 +24,10 @@ interface StoreAction extends Action {
 
 const reducer: (
   state: typeof initialState,
-  action: StoreAction
+  action: StoreAction,
 ) => typeof initialState = (
   state: typeof initialState,
-  action: StoreAction
+  action: StoreAction,
 ) => {
   switch (action.type) {
     case SET_DOCUMENT_TREE:

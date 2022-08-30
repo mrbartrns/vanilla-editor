@@ -1,5 +1,6 @@
 class Storage<T> {
   storage = localStorage;
+
   getItem(key: string, defaultValue: T) {
     try {
       const data = this.storage.getItem(key);

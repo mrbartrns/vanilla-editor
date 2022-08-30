@@ -1,9 +1,9 @@
-import { Component } from './components/Component.js';
+import Component from './components/Component.js';
 import { init } from './utils/router.js';
-import { Sidebar } from './components/Sidebar/Sidebar.js';
+import Sidebar from './components/Sidebar/Sidebar.js';
 import { fetchDocumentTree, fetchContent } from './apis/request.js';
-import { Editor } from './components/Editor.js';
-import { Modal } from './components/Modal.js';
+import Editor from './components/Editor.js';
+import Modal from './components/Modal.js';
 import tree from './utils/DocumentTree.js';
 import storage from './utils/storage.js';
 import { TOGGLE_INFO } from './constants.js';
@@ -14,12 +14,13 @@ import {
   SET_DOCUMENT_TREE,
   SET_TOGGLE_CONTROLLER,
 } from './core/store.js';
-import { EventListener } from './components/EventListener.js';
-import { MessagePage } from './components/MessagePage.js';
+import EventListener from './components/EventListener.js';
+import MessagePage from './components/MessagePage.js';
 import { IBaseProps } from './components/types/index.js';
 
 class App extends Component {
   $sidebar: Sidebar;
+
   constructor({ $target }: IBaseProps) {
     super({ $target, elementType: 'div' });
     this.$element.id = 'App';
@@ -59,7 +60,7 @@ class App extends Component {
   }
 
   async router() {
-    const { pathname } = location;
+    const { pathname } = window.location;
     this.$sidebar.$body.render();
 
     // SET CURRENT SELECTED CLASS ON LIST BY PATHNAME
@@ -105,10 +106,15 @@ class App extends Component {
     dispatch({ type: SET_TOGGLE_CONTROLLER, payload: toggles });
 
     const data = response.map((document) =>
-      tree.setToggleOption(document, null, new Set(getState().toggleController))
+      tree.setToggleOption(
+        document,
+        null,
+        new Set(getState().toggleController),
+      ),
     );
 
     dispatch({ type: SET_DOCUMENT_TREE, payload: data });
   }
 }
-export { App };
+
+export default App;

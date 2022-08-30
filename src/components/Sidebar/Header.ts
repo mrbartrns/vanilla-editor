@@ -1,4 +1,4 @@
-import { Component } from '../Component.js';
+import Component from '../Component.js';
 import { IBaseProps } from '../types/index.js';
 
 class Header extends Component {
@@ -14,4 +14,4 @@ class Header extends Component {
     `;
   }
 }
-export { Header };
+export default Header;

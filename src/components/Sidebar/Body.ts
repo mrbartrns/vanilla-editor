@@ -1,4 +1,4 @@
-import { Component } from '../Component.js';
+import Component from '../Component.js';
 import {
   DOCUMENT_LIST_CLASSNAME,
   ADD_CLASSNAME,
@@ -21,7 +21,7 @@ class Body extends Component {
   }
 
   template() {
-    const documentTree = getState().documentTree;
+    const { documentTree } = getState();
     return `
     <div class="sidebar-documents">
       ${
@@ -56,7 +56,7 @@ class Body extends Component {
       document.toggled ? 'toggled' : ''
     }"></div>
           <div class="document-list-title-wrapper ${
-            Number(location.pathname.split('/')[2]) === document.id
+            Number(window.location.pathname.split('/')[2]) === document.id
               ? 'current-document'
               : ''
           }">
@@ -70,6 +70,7 @@ class Body extends Component {
         </div>
         </div>
       ${
+        // eslint-disable-next-line no-nested-ternary
         document.documents.length && document.toggled
           ? document.documents
               .map((child) => {
@@ -92,4 +93,4 @@ class Body extends Component {
     `;
   }
 }
-export { Body };
+export default Body;

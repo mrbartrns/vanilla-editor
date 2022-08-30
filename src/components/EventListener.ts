@@ -31,7 +31,7 @@ class EventListener {
 
       // change route
       onRouteChange(
-        `/${nextDocument.parent ? `documents` : `modal`}/${nextDocument.id}`
+        `/${nextDocument.parent ? `documents` : `modal`}/${nextDocument.id}`,
       );
     });
 
@@ -45,7 +45,7 @@ class EventListener {
       tree._saveToggleInfo();
 
       // if target id was what I saw, go to root page
-      const { pathname } = location;
+      const { pathname } = window.location;
       if (pathname.indexOf('/documents/') === 0) {
         const [, , currentId] = pathname.split('/');
         if (Number(currentId) === id) {
@@ -72,9 +72,9 @@ class EventListener {
     });
 
     window.addEventListener(CLICK_OUTSIDE_MODAL_EVENT, () => {
-      history.back();
+      window.history.back();
     });
   }
 }
 
-export { EventListener };
+export default EventListener;

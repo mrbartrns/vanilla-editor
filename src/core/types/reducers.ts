@@ -3,5 +3,5 @@ import { StoreObject } from './stores.js';
 
 export type Reducer<S extends StoreObject, A extends Action = AnyAction> = (
   state: S,
-  action: A
+  action: A,
 ) => S;

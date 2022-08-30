@@ -1,5 +1,6 @@
-class Component<T = {}> {
+class Component<T = Record<string, never>> {
   $element: HTMLElement;
+
   state?: T;
 
   constructor({
@@ -29,4 +30,4 @@ class Component<T = {}> {
   setEvent() {}
 }
 
-export { Component };
+export default Component;

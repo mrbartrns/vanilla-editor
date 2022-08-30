@@ -1,5 +1,5 @@
-import { Component } from './Component.js';
-import { debounce } from '../utils/debounce.js';
+import Component from './Component.js';
+import debounce from '../utils/debounce.js';
 import { getState, subscribe } from '../core/store.js';
 import { EDITOR_AUTOSAVE_EVENT, EDIT_DOCUMENT_EVENT } from '../constants.js';
 import { IBaseProps } from './types/index.js';
@@ -26,7 +26,7 @@ class Editor extends Component {
     }
     const { title, content } = getState().currentDocument as DocumentContentApi;
     const $title = this.$element.querySelector(
-      '[name=title]'
+      '[name=title]',
     ) as HTMLInputElement;
     const $content = this.$element.querySelector('[name=content]');
     if ($title) $title.value = title;
@@ -58,9 +58,9 @@ class Editor extends Component {
             detail: {
               editorState: state,
             },
-          })
+          }),
         );
-      }, 500)
+      }, 500),
     );
 
     this.$element.addEventListener('keyup', (e: any) => {
@@ -79,9 +79,9 @@ class Editor extends Component {
           detail: {
             editorState: nextState,
           },
-        })
+        }),
       );
     });
   }
 }
-export { Editor };
+export default Editor;
