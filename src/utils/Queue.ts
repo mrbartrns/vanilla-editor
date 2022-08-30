@@ -1,4 +1,4 @@
-import QueueNode, { QNode } from '../core/Node';
+import QueueNode, { QNode } from '../core/QueueNode';
 
 interface QueueInterface<T> {
   head: T | null;
